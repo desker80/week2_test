@@ -1,78 +1,123 @@
-
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또 추첨 - 재미로 즐기는 번호 생성기</title>
+    <title>Isaac Lab Learning Hub | Unified Robot Learning</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Three.js CDN -->
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
 </head>
 <body>
     <header class="site-header">
-        <div class="header-content">
-            <a href="index.html" class="logo">로또 번호 생성기</a>
-            <nav>
-                <a href="index.html">홈</a>
-                <a href="about.html">소개</a>
-                <a href="privacy.html">개인정보처리방침</a>
-            </nav>
+        <div class="logo">
+            <span class="nvidia-green">Isaac Lab</span> Learning Hub
+        </div>
+        <nav class="top-nav">
+            <a href="https://github.com/isaac-sim/IsaacLab" target="_blank">GitHub</a>
+            <a href="https://isaac-sim.github.io/IsaacLab/" target="_blank">Docs</a>
+            <a href="https://discord.com/invite/isaacsim" target="_blank">Discord</a>
+        </nav>
+        <div class="status-indicator">
+            <span class="status-dot pulse"></span>
+            Simulation Active
         </div>
     </header>
 
-    <main>
-        <div class="intro-text">
-            <h1>로또 번호, 고민하지 마세요!</h1>
-            <p>버튼 하나로 쉽고 빠르게 6개의 행운 번호를 생성해 보세요. 이 번호 생성기는 통계나 확률에 기반한 분석 도구가 아니며, 순수한 무작위 방식으로 번호를 조합하여 재미를 제공합니다. 생성된 번호는 참고용으로만 사용해 주세요.</p>
-        </div>
-
-        <div class="lotto-machine">
-            <h2>로또 추첨</h2>
-            <div class="numbers">
-                <!-- Numbers will be inserted here by JavaScript -->
+    <main class="dashboard">
+        <section class="viewport-section">
+            <div class="card-header">
+                <h3><i class="icon-sim"></i> Simulation Viewport</h3>
+                <div class="viewport-controls">
+                    <button id="reset-sim">Reset</button>
+                    <button id="pause-sim">Pause</button>
+                    <span id="fps-display">60 FPS</span>
+                </div>
             </div>
-            <button id="draw-button">번호 추첨</button>
-        </div>
+            <div id="simulation-viewport">
+                <!-- Three.js renders here -->
+                <div class="viewport-overlay">
+                    <div class="overlay-item">Agent: <span id="agent-type">Anymal-C</span></div>
+                    <div class="overlay-item">Env: <span id="env-type">Flat Plane</span></div>
+                </div>
+            </div>
+        </section>
 
-        <div class="contact-form-container">
-            <h2>제휴 문의</h2>
-            <form action="https://formspree.io/f/mzdarkjl" method="POST" id="contact-form">
-                <label for="name">이름:</label>
-                <input type="text" id="name" name="name" required>
+        <section class="tools-section">
+            <div class="card cli-cheat-sheet">
+                <h3><i class="icon-cli"></i> CLI Cheat Sheet</h3>
+                <div class="cli-list">
+                    <div class="cli-item">
+                        <label>Run RL Training</label>
+                        <code>python scripts/reinforcement_learning/train.py --task Isaac-Ant-v0</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="cli-item">
+                        <label>Playback Policy</label>
+                        <code>python scripts/reinforcement_learning/play.py --task Isaac-Ant-v0 --checkpoint path/to/model</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="cli-item">
+                        <label>Run Extensions</label>
+                        <code>./isaaclab.sh -p scripts/extensions/list_exts.py</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
 
-                <label for="email">이메일:</label>
-                <input type="email" id="email" name="email" required>
+            <div class="card resources">
+                <h3><i class="icon-docs"></i> Key Resources</h3>
+                <ul class="resource-links">
+                    <li><a href="https://isaac-sim.github.io/IsaacLab/source/setup/installation.html" target="_blank"><span>→</span> Installation Guide</a></li>
+                    <li><a href="https://isaac-sim.github.io/IsaacLab/source/tutorials/00_sim/index.html" target="_blank"><span>→</span> Core Simulation Tutorials</a></li>
+                    <li><a href="https://isaac-sim.github.io/IsaacLab/source/api/index.html" target="_blank"><span>→</span> API Reference</a></li>
+                </ul>
+            </div>
+        </section>
 
-                <label for="message">메시지:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
-                <button type="submit">문의 보내기</button>
-            </form>
-        </div>
-
-        <div id="disqus_thread"></div>
+        <section class="environments-section">
+            <h3><i class="icon-env"></i> Environment Explorer</h3>
+            <div class="env-grid">
+                <div class="env-card" data-env="anymal">
+                    <div class="env-thumb" style="background-image: url('https://placehold.co/400x200/222/76b900?text=ANYmal-C')"></div>
+                    <div class="env-info">
+                        <h4>ANYmal-C</h4>
+                        <p>Quadrupedal locomotion over rough terrain.</p>
+                        <span class="tag">Locomotion</span>
+                    </div>
+                </div>
+                <div class="env-card" data-env="franka">
+                    <div class="env-thumb" style="background-image: url('https://placehold.co/400x200/222/76b900?text=Franka+Emika')"></div>
+                    <div class="env-info">
+                        <h4>Franka Emika</h4>
+                        <p>Robotic arm for manipulation and assembly tasks.</p>
+                        <span class="tag">Manipulation</span>
+                    </div>
+                </div>
+                <div class="env-card" data-env="cartpole">
+                    <div class="env-thumb" style="background-image: url('https://placehold.co/400x200/222/76b900?text=Cartpole')"></div>
+                    <div class="env-info">
+                        <h4>Cartpole</h4>
+                        <p>Classical control problem for balancing a pole.</p>
+                        <span class="tag">Control</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-    
-    <button id="theme-toggle">테마 변경</button>
 
     <footer class="site-footer">
-        <p>&copy; 2026 로또 추첨. All Rights Reserved.</p>
-        <p><a href="privacy.html">개인정보처리방침</a></p>
+        <p>Built with <span class="nvidia-green">Isaac Lab</span> principles. Practice Environment for Robot Learning.</p>
     </footer>
 
-    <script>
-        var disqus_config = function () {
-            this.page.url = window.location.href;
-            this.page.identifier = 'lotto-drawing-homepage';
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://desker80.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>댓글을 보려면 JavaScript를 활성화하세요. <a href="https://disqus.com/?ref_noscript">Disqus에서 제공하는 댓글입니다.</a></noscript>
-
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>

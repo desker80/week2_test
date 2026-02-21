@@ -1,218 +1,343 @@
-
 :root {
-    --background-color: #f4f6f9;
-    --lotto-machine-background: #ffffff;
-    --text-color: #212529;
-    --number-background: #e9ecef;
-    --button-background: #007bff;
-    --button-text: #ffffff;
-    --button-hover: #0056b3;
-    --shadow-color: rgba(0, 0, 0, 0.075);
-    --header-background: #ffffff;
-    --header-shadow: rgba(0, 0, 0, 0.05);
-    --link-color: #007bff;
+    --bg-darker: #050505;
+    --bg-dark: #0a0a0a;
+    --bg-card: #151515;
+    --nvidia-green: #76b900;
+    --nvidia-green-glow: rgba(118, 185, 0, 0.4);
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent-glow: 0 0 15px var(--nvidia-green-glow);
+    --border-color: #222;
+    --radius: 12px;
 }
 
-body[data-theme='dark'] {
-    --background-color: #121212;
-    --lotto-machine-background: #1e1e1e;
-    --text-color: #e9ecef;
-    --number-background: #343a40;
-    --button-background: #343a40;
-    --button-hover: #495057;
-    --shadow-color: rgba(255, 255, 255, 0.05);
-    --header-background: #1e1e1e;
-    --header-shadow: rgba(255, 255, 255, 0.05);
-    --link-color: #80bfff;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-    margin: 0;
-    padding-top: 70px; /* Space for fixed header */
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    padding-top: 64px;
 }
 
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
+/* Header */
 .site-header {
-    width: 100%;
-    background-color: var(--header-background);
-    box-shadow: 0 2px 4px var(--header-shadow);
-    padding: 0 20px;
+    height: 64px;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
     position: fixed;
     top: 0;
-    left: 0;
-    z-index: 1001;
-    display: flex;
-    justify-content: center;
-}
-
-.header-content {
+    width: 100%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 960px;
-    height: 70px;
+    padding: 0 2rem;
 }
 
-.site-header .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--text-color);
+.logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+}
+
+.nvidia-green {
+    color: var(--nvidia-green);
+    text-shadow: var(--accent-glow);
+}
+
+.top-nav a {
+    color: var(--text-secondary);
     text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 0.9rem;
+    transition: color 0.3s;
 }
 
-.site-header nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1rem;
+.top-nav a:hover {
+    color: var(--nvidia-green);
 }
 
-.intro-text, .page-content {
-    text-align: center;
-    max-width: 800px;
-    margin-bottom: 30px;
-}
-
-.page-content {
-    text-align: left;
-}
-
-.lotto-machine {
-    background-color: var(--lotto-machine-background);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    text-align: center;
-    margin-bottom: 30px;
-    width: 100%;
-    max-width: 500px;
-}
-
-.numbers {
+.status-indicator {
     display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.number {
-    width: 50px;
-    height: 50px;
-    background-color: var(--number-background);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 0 5px;
-    font-size: 24px;
-    font-weight: bold;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: #111;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
 }
 
-#draw-button {
-    background-color: var(--button-background);
-    color: var(--button-text);
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--nvidia-green);
+    border-radius: 50%;
+    box-shadow: var(--accent-glow);
 }
 
-#draw-button:hover {
-    background-color: var(--button-hover);
+.pulse {
+    animation: pulse-animation 2s infinite;
 }
 
-#theme-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    border: none;
-    background-color: var(--button-background);
-    color: var(--button-text);
-    cursor: pointer;
-    z-index: 1000;
+@keyframes pulse-animation {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--nvidia-green-glow); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(118, 185, 0, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(118, 185, 0, 0); }
 }
 
-.contact-form-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--lotto-machine-background);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    width: 300px;
-    z-index: 1000;
+/* Dashboard Layout */
+.dashboard {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+        "viewport tools"
+        "envs envs";
+    gap: 1.5rem;
 }
 
-#contact-form {
+@media (max-width: 1024px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "viewport"
+            "tools"
+            "envs";
+    }
+}
+
+/* Viewport Section */
+.viewport-section {
+    grid-area: viewport;
     display: flex;
     flex-direction: column;
+}
+
+#simulation-viewport {
+    height: 500px;
+    background: #000;
+    border-radius: 0 0 var(--radius) var(--radius);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header {
+    background: var(--bg-card);
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    border-radius: var(--radius) var(--radius) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.viewport-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.viewport-controls button {
+    background: #222;
+    color: white;
+    border: 1px solid #333;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.viewport-controls button:hover {
+    background: #333;
+    border-color: var(--nvidia-green);
+}
+
+.viewport-overlay {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    pointer-events: none;
+}
+
+.overlay-item {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: var(--nvidia-green);
+    border-left: 2px solid var(--nvidia-green);
+}
+
+/* Tools Section */
+.tools-section {
+    grid-area: tools;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+}
+
+.card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
     gap: 10px;
 }
 
-#contact-form label, #contact-form h2 {
-    text-align: left;
-    color: var(--text-color);
+.cli-item {
+    margin-bottom: 1.2rem;
+}
+
+.cli-item label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.cli-item code {
+    display: block;
+    background: #000;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--nvidia-green);
+    border: 1px solid #222;
+    word-break: break-all;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    position: relative;
+}
+
+.copy-btn {
+    margin-top: 4px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.resource-links {
+    list-style: none;
+}
+
+.resource-links li {
+    margin-bottom: 10px;
+}
+
+.resource-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+}
+
+.resource-links a:hover {
+    color: var(--nvidia-green);
+    transform: translateX(5px);
+}
+
+/* Environments Section */
+.environments-section {
+    grid-area: envs;
+}
+
+.environments-section h3 {
+    margin-bottom: 1.5rem;
+}
+
+.env-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.env-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.env-card:hover {
+    border-color: var(--nvidia-green);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.env-thumb {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(0.5);
+    transition: filter 0.3s;
+}
+
+.env-card:hover .env-thumb {
+    filter: grayscale(0);
+}
+
+.env-info {
+    padding: 1.2rem;
+}
+
+.env-info h4 {
+    margin-bottom: 0.5rem;
+}
+
+.env-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background: #222;
+    color: var(--nvidia-green);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
     font-weight: bold;
 }
 
-#contact-form input, #contact-form textarea {
-    padding: 10px;
-    border: 1px solid var(--number-background);
-    border-radius: 5px;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#contact-form button {
-    background-color: var(--button-background);
-    color: var(--button-text);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-#disqus_thread {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 800px;
-}
-
+/* Footer */
 .site-footer {
-    width: 100%;
     text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background-color: var(--lotto-machine-background);
-    color: var(--text-color);
-}
-
-.site-footer a {
-    color: var(--link-color);
-    text-decoration: none;
+    padding: 3rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
 }
